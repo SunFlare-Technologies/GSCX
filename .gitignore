@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# config
+gittoken.txt
+user_config.json
+
+*.pup

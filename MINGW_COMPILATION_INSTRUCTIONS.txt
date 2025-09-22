@@ -1,0 +1,243 @@
+GSCX - PlayStation 3 MLE-Kind Emulator
+MinGW Compilation Instructions
+=====================================
+
+This document provides step-by-step instructions for compiling GSCX using MinGW-w64 on Windows.
+
+PREREQUISITES
+=============
+
+1. MinGW-w64 (recommended: latest version)
+   - Download from: https://www.mingw-w64.org/downloads/
+   - Or use MSYS2: https://www.msys2.org/
+
+2. CMake (version 3.15 or higher)
+   - Download from: https://cmake.org/download/
+
+3. Git (for version control)
+   - Download from: https://git-scm.com/download/win
+
+4. Python 3.8+ (for GUI components)
+   - Download from: https://www.python.org/downloads/
+
+INSTALLATION STEPS
+==================
+
+1. Install MSYS2 (Recommended Method)
+   ----------------------------------
+   a) Download and install MSYS2 from https://www.msys2.org/
+   b) Open MSYS2 terminal and update the package database:
+      pacman -Syu
+   
+   c) Install MinGW-w64 toolchain and dependencies:
+      pacman -S mingw-w64-x86_64-toolchain
+      pacman -S mingw-w64-x86_64-cmake
+      pacman -S mingw-w64-x86_64-ninja
+      pacman -S mingw-w64-x86_64-pkg-config
+      pacman -S mingw-w64-x86_64-qt6-base
+      pacman -S mingw-w64-x86_64-qt6-tools
+      pacman -S mingw-w64-x86_64-opengl
+      pacman -S mingw-w64-x86_64-vulkan-headers
+      pacman -S mingw-w64-x86_64-vulkan-loader
+      pacman -S mingw-w64-x86_64-glfw
+      pacman -S mingw-w64-x86_64-glew
+      pacman -S mingw-w64-x86_64-boost
+      pacman -S mingw-w64-x86_64-zlib
+      pacman -S mingw-w64-x86_64-libpng
+      pacman -S mingw-w64-x86_64-libjpeg-turbo
+      pacman -S mingw-w64-x86_64-freetype
+      pacman -S mingw-w64-x86_64-harfbuzz
+
+2. Alternative: Standalone MinGW-w64
+   ----------------------------------
+   a) Download MinGW-w64 from https://www.mingw-w64.org/downloads/
+   b) Extract to C:\mingw64
+   c) Add C:\mingw64\bin to your PATH environment variable
+   d) Install CMake separately and add to PATH
+
+COMPILATION PROCESS
+===================
+
+1. Open MinGW-w64 Terminal
+   -------------------------
+   - If using MSYS2: Open "MSYS2 MinGW 64-bit" from Start Menu
+   - If using standalone: Open Command Prompt with MinGW in PATH
+
+2. Navigate to GSCX Directory
+   ---------------------------
+   cd /path/to/GSCX
+   # Example: cd /c/Users/User/Desktop/GSCX
+
+3. Create Build Directory
+   -----------------------
+   mkdir build
+   cd build
+
+4. Configure with CMake
+   ---------------------
+   # For Release build (recommended for distribution):
+   cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17
+   
+   # For Debug build (for development):
+   cmake .. -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_STANDARD=17
+   
+   # With Ninja (faster builds, if installed):
+   cmake .. -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_STANDARD=17
+
+5. Compile the Project
+   -------------------
+   # If using MinGW Makefiles:
+   mingw32-make -j$(nproc)
+   
+   # If using Ninja:
+   ninja
+   
+   # Alternative with CMake:
+   cmake --build . --config Release --parallel
+
+6. Install (Optional)
+   ------------------
+   mingw32-make install
+   # or
+   ninja install
+
+FILE STRUCTURE AFTER COMPILATION
+=================================
+
+After successful compilation, you should have:
+
+build/
+├── src/
+│   ├── core/
+│   │   ├── libgscx_core.a          # Core emulation library
+│   │   └── hypervisor/
+│   │       └── libgscx_hypervisor.a # PS3 Hypervisor library
+│   ├── modules/
+│   │   ├── cpu_cell/
+│   │   │   └── libgscx_cell.a      # Cell CPU library (PPU/SPU)
+│   │   └── rsx/
+│   │       └── libgscx_rsx.a       # RSX Graphics library
+│   └── tools/
+│       └── gscx_cli.exe            # Command-line interface
+├── pyapp/
+│   └── gscx_gui/                   # Python GUI (no compilation needed)
+└── gscx.exe                        # Main executable (if configured)
+
+COMPILATION FLAGS AND OPTIONS
+=============================
+
+Recommended CMake options:
+
+-DCMAKE_BUILD_TYPE=Release          # Optimized build
+-DCMAKE_CXX_STANDARD=17             # C++17 standard
+-DCMAKE_CXX_FLAGS="-O3 -march=native" # Maximum optimization
+-DENABLE_OPENGL=ON                  # Enable OpenGL renderer
+-DENABLE_VULKAN=ON                  # Enable Vulkan renderer (if available)
+-DENABLE_AUDIO=ON                   # Enable audio support
+-DENABLE_NETWORKING=ON              # Enable network features
+-DBUILD_SHARED_LIBS=OFF             # Static linking (recommended)
+
+For debugging:
+-DCMAKE_BUILD_TYPE=Debug
+-DCMAKE_CXX_FLAGS="-g -O0"
+-DENABLE_DEBUG_LOGGING=ON
+-DENABLE_PROFILING=ON
+
+TROUBLESHOOTING
+===============
+
+1. "mingw32-make: command not found"
+   Solution: Ensure MinGW-w64/bin is in your PATH
+
+2. "CMake Error: Could not find CMAKE_CXX_COMPILER"
+   Solution: Install mingw-w64-x86_64-toolchain package
+
+3. "fatal error: windows.h: No such file or directory"
+   Solution: Install mingw-w64-x86_64-headers package
+
+4. Qt6 related errors:
+   Solution: Install mingw-w64-x86_64-qt6-base and related packages
+
+5. OpenGL/Vulkan errors:
+   Solution: Install graphics drivers and mingw-w64-x86_64-opengl packages
+
+6. Python GUI not working:
+   Solution: Install Python dependencies:
+   pip install PySide6 configparser argparse
+
+7. Assembly files (.s) compilation errors:
+   Solution: Ensure you have mingw-w64-x86_64-binutils installed
+
+RUNNING THE EMULATOR
+====================
+
+1. Command Line Interface:
+   ./build/src/tools/gscx_cli.exe [options] <ps3_executable>
+
+2. Python GUI:
+   cd pyapp
+   python -m gscx_gui.app
+
+3. Main executable (if built):
+   ./build/gscx.exe
+
+DISTRIBUTION
+============
+
+To create a distributable package:
+
+1. Copy the compiled executables
+2. Copy required DLLs:
+   - MinGW runtime DLLs (libgcc_s_seh-1.dll, libstdc++-6.dll, libwinpthread-1.dll)
+   - Qt6 DLLs (if using Qt GUI)
+   - OpenGL/Vulkan DLLs
+
+3. Use windeployqt for Qt applications:
+   windeployqt.exe gscx.exe
+
+4. Create installer using NSIS or Inno Setup
+
+PERFORMANCE OPTIMIZATION
+========================
+
+For maximum performance:
+
+1. Use Release build type
+2. Enable link-time optimization: -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON
+3. Use native CPU optimizations: -DCMAKE_CXX_FLAGS="-O3 -march=native -mtune=native"
+4. Enable all CPU extensions: -DENABLE_AVX=ON -DENABLE_SSE4=ON
+5. Use static linking to reduce overhead
+
+DEVELOPMENT SETUP
+=================
+
+For development:
+
+1. Use Debug build type
+2. Enable all debugging features
+3. Install development tools:
+   pacman -S mingw-w64-x86_64-gdb      # Debugger
+   pacman -S mingw-w64-x86_64-valgrind # Memory checker (if available)
+
+4. IDE recommendations:
+   - Code::Blocks with MinGW
+   - Qt Creator
+   - CLion
+   - Visual Studio Code with C++ extensions
+
+ADDITIONAL NOTES
+================
+
+1. The PS3 Hypervisor code requires assembly compilation
+2. Cell CPU modules (PPU/SPU) need PowerPC cross-compilation support
+3. RSX graphics require OpenGL 4.0+ or Vulkan support
+4. Audio requires DirectSound or WASAPI on Windows
+5. Network features require Winsock2
+
+For questions or issues, refer to:
+- Project documentation
+- MinGW-w64 documentation: https://www.mingw-w64.org/
+- CMake documentation: https://cmake.org/documentation/
+
+Last updated: January 2024
+GSCX Development Team

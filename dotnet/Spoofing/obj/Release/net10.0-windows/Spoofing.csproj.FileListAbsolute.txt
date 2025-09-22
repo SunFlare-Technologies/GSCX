@@ -1,0 +1,12 @@
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\bin\Release\net10.0-windows\GSCX.Spoofing.deps.json
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\bin\Release\net10.0-windows\GSCX.Spoofing.dll
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\bin\Release\net10.0-windows\GSCX.Spoofing.pdb
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\obj\Release\net10.0-windows\Spoofing.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\obj\Release\net10.0-windows\Spoofing.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\obj\Release\net10.0-windows\Spoofing.AssemblyInfo.cs
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\obj\Release\net10.0-windows\Spoofing.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\obj\Release\net10.0-windows\Spoofing.sourcelink.json
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\obj\Release\net10.0-windows\GSCX.Spoofing.dll
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\obj\Release\net10.0-windows\refint\GSCX.Spoofing.dll
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\obj\Release\net10.0-windows\GSCX.Spoofing.pdb
+C:\Users\User\Desktop\GSCX\dotnet\Spoofing\obj\Release\net10.0-windows\ref\GSCX.Spoofing.dll
